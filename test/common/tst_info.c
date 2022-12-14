@@ -54,7 +54,7 @@ tst_start(const char *msg)
 
     tst = calloc(1, sizeof(tst_info_t));
     if (!tst) {
-        cne_printf("[red]Error[]: [magenta]Unable to allocate tst_info_t structure[]\n");
+        cne_printf("[red]Error: Unable to allocate tst_info_t structure[]\n");
         abort();
     }
 
@@ -64,8 +64,8 @@ tst_start(const char *msg)
 
     srand(0x56063011);
 
-    cne_printf("[cyan]>>>> [yellow]%s [green]tests[]: [magenta]Lcore ID [red]%d[], [magenta]Socket "
-               "ID [red]%d[]\n",
+    cne_printf("[yellow]>>>>[] %s tests: Lcore ID %d, Socket "
+               "ID %d\n",
                tst->name, tst->lid, tst->sid);
 
     return tst;
@@ -75,9 +75,9 @@ void
 tst_end(tst_info_t *tst, int result)
 {
     if (!tst)
-        cne_panic("tst cannot be NULL\n");
+        cne_panic("[red]tst cannot be NULL[]\n");
 
-    cne_printf("[cyan]<<<< [yellow]%s [green]Tests[]: [magenta]done.[]\n\n", tst->name);
+    cne_printf("[yellow]<<<<[] %s Tests: done.\n\n", tst->name);
 
     if (result == TST_PASSED)
         atomic_fetch_add(&tst_stats.pass, 1);
@@ -95,7 +95,7 @@ tst_skip(const char *fmt, ...)
     va_list va_list;
 
     va_start(va_list, fmt);
-    cne_printf("[yellow]  ** [green]SKIP[] - [green]TEST[]: [cyan]");
+    cne_printf("[yellow]  ** SKIP - TEST[]: ");
     cne_vprintf(fmt, va_list);
     cne_printf("[]\n");
     va_end(va_list);
@@ -109,7 +109,7 @@ tst_ok(const char *fmt, ...)
     va_list va_list;
 
     va_start(va_list, fmt);
-    cne_printf("[yellow]  ** [green]PASS[] - [green]TEST[]: [cyan]");
+    cne_printf("[green]  ** PASS - TEST[]: ");
     cne_vprintf(fmt, va_list);
     cne_printf("[]\n");
     va_end(va_list);
@@ -123,7 +123,7 @@ tst_error(const char *fmt, ...)
     va_list va_list;
 
     va_start(va_list, fmt);
-    cne_printf("[yellow]  >> [red]FAIL[] - [green]TEST[]: [cyan]");
+    cne_printf("[red]  >> FAIL - TEST[]: ");
     cne_vprintf(fmt, va_list);
     cne_printf("[]\n");
     va_end(va_list);
@@ -137,7 +137,7 @@ tst_info(const char *fmt, ...)
     va_list va_list;
 
     va_start(va_list, fmt);
-    cne_printf("\n[yellow]  == [blue]INFO[] - [green]TEST[]: [cyan]");
+    cne_printf("\n[yellow]  == INFO - TEST[]: ");
     cne_vprintf(fmt, va_list);
     cne_printf("[]\n");
     va_end(va_list);
