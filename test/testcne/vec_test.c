@@ -140,6 +140,7 @@ result_print(tst_info_t *tst, int ret)
 {
     if (tst == NULL) {
         tst_error("test case struct was empty");
+        return;
     }
 
     if (ret == TST_PASSED) {
